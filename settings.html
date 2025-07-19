@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LezGO - Admin Settings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-green: #28a745;
+            --dark-green: #218838;
+            --light-green: #f1f8e9;
+            --white: #ffffff;
+            --black: #212529;
+            --gray: #6c757d;
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+            --error-red: #dc3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: var(--light-gray);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background-color: var(--black);
+            color: var(--white);
+            height: 100vh;
+            position: fixed;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            background-color: var(--dark-gray);
+            border-bottom: 2px solid var(--primary-green);
+        }
+
+        .sidebar-header h3 {
+            color: var(--primary-green);
+            font-size: 1.3rem;
+        }
+
+        .sidebar-menu {
+            padding: 1rem 0;
+        }
+
+        .sidebar-menu ul {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background-color: var(--dark-gray);
+            color: var(--primary-green);
+            border-left: 3px solid var(--primary-green);
+        }
+
+        .sidebar-menu i {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            background-color: var(--white);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-nav-left h2 {
+            color: var(--black);
+            font-size: 1.5rem;
+        }
+
+        .top-nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+        }
+
+        .user-profile span {
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .logout-btn {
+            margin-left: 1.5rem;
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--dark-green);
+        }
+
+        /* Settings Content */
+        .settings-container {
+            padding: 1.5rem;
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-title {
+            font-size: 1.5rem;
+            color: var(--black);
+        }
+
+        .settings-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+            color: var(--gray);
+        }
+
+        .settings-tab.active {
+            color: var(--primary-green);
+            border-bottom-color: var(--primary-green);
+        }
+
+        .settings-content {
+            display: none;
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .settings-content.active {
+            display: block;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-green);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.15);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-green);
+            border: none;
+            color: var(--white);
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--dark-green);
+        }
+
+        .btn-danger {
+            background-color: var(--error-red);
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        /* System Settings Specific */
+        .maintenance-message {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3>LezGO Admin</h3>
+        </div>
+        <div class="sidebar-menu">
+            <ul>
+                <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/admin.html" class="active"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+                <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/vehicles.html"><i class="fas fa-car"></i> <span>Vehicle Management</span></a></li>
+                <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/bookings.html"><i class="fas fa-calendar-check"></i> <span>Bookings</span></a></li>
+                <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/finantial.html"><i class="fas fa-users"></i> <span>finantial</span></a></li>
+                <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/maintanance.html"><i class="fas fa-wrench"></i> <span>Maintenance</span></a></li>
+                <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/reports.html"><i class="fas fa-chart-line"></i> <span>Reports</span></a></li>
+                <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/settings.html"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navigation -->
+        <div class="top-nav">
+            <div class="top-nav-left">
+                <h2>System Settings</h2>
+            </div>
+            <div class="top-nav-right">
+                <div class="user-profile">
+                    <img src="C:\Users\RIDHUNANDA\Documents\vehicle project\nodejsproject\public\logo.jpg" alt="Admin User">
+                    <span>Admin User</span>
+                </div>
+                <button class="logout-btn">Logout</button>
+            </div>
+        </div>
+
+        <!-- Settings Container -->
+        <div class="settings-container">
+            <div class="settings-header">
+                <h2 class="settings-title"><i class="fas fa-cog"></i> System Configuration</h2>
+            </div>
+
+            <!-- Settings Tabs -->
+            <div class="settings-tabs">
+                <div class="settings-tab active" data-tab="system">System</div>
+                <div class="settings-tab" data-tab="business">Business</div>
+                <div class="settings-tab" data-tab="payment">Payments</div>
+                <div class="settings-tab" data-tab="email">Email</div>
+                <div class="settings-tab" data-tab="security">Security</div>
+            </div>
+
+            <!-- System Settings Content -->
+            <div class="settings-content active" id="system-settings">
+                <form id="system-settings-form">
+                    <div class="form-group">
+                        <label for="site-name">Site Name</label>
+                        <input type="text" id="site-name" value="LezGO Vehicle Rental">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="site-url">Site URL</label>
+                        <input type="url" id="site-url" value="https://lezgo-rentals.com">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="timezone">Timezone</label>
+                            <select id="timezone">
+                                <option value="UTC+05:30" selected>Asia/Kolkata (UTC +05:30)</option>
+                                <option value="UTC+00:00">UTC/GMT</option>
+                                <option value="UTC-05:00">Eastern Time (UTC -05:00)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="date-format">Date Format</label>
+                            <select id="date-format">
+                                <option value="d-m-Y" selected>DD-MM-YYYY</option>
+                                <option value="m-d-Y">MM-DD-YYYY</option>
+                                <option value="Y-m-d">YYYY-MM-DD</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="maintenance-mode"> Enable Maintenance Mode
+                        </label>
+                        <p class="maintenance-message">When enabled, only administrators can access the site</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="maintenance-message">Maintenance Message</label>
+                        <textarea id="maintenance-message" rows="3" disabled>Our site is currently undergoing maintenance. We'll be back soon!</textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn"><i class="fas fa-save"></i> Save Changes</button>
+                        <button type="reset" class="btn btn-danger"><i class="fas fa-undo"></i> Reset</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Business Settings Content -->
+            <div class="settings-content" id="business-settings">
+                <form id="business-settings-form">
+                    <div class="form-group">
+                        <label for="company-name">Company Name</label>
+                        <input type="text" id="company-name" value="LezGO Vehicle Rentals Pvt. Ltd.">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company-address">Address</label>
+                        <textarea id="company-address" rows="3">123 Rental Street, Bangalore, Karnataka 560001</textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="company-phone">Phone Number</label>
+                            <input type="tel" id="company-phone" value="+91 80 1234 5678">
+                        </div>
+                        <div class="form-group">
+                            <label for="company-email">Contact Email</label>
+                            <input type="email" id="company-email" value="contact@lezgo-rentals.com">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="business-hours">Business Hours</label>
+                        <input type="text" id="business-hours" value="Mon-Sun: 8:00 AM - 10:00 PM">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn"><i class="fas fa-save"></i> Save Changes</button>
+                        <button type="reset" class="btn btn-danger"><i class="fas fa-undo"></i> Reset</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Payment Settings Content -->
+            <div class="settings-content" id="payment-settings">
+                <form id="payment-settings-form">
+                    <div class="form-group">
+                        <label for="currency">Currency</label>
+                        <select id="currency">
+                            <option value="INR" selected>Indian Rupee (₹)</option>
+                            <option value="USD">US Dollar ($)</option>
+                            <option value="EUR">Euro (€)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="payment-methods">Payment Methods</label>
+                        <div style="margin-top: 0.5rem;">
+                            <label style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                                <input type="checkbox" checked style="margin-right: 0.5rem;"> Credit/Debit Cards
+                            </label>
+                            <label style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                                <input type="checkbox" checked style="margin-right: 0.5rem;"> Net Banking
+                            </label>
+                            <label style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                                <input type="checkbox" checked style="margin-right: 0.5rem;"> UPI
+                            </label>
+                            <label style="display: flex; align-items: center;">
+                                <input type="checkbox" style="margin-right: 0.5rem;"> Cash on Delivery
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tax-rate">Tax Rate (%)</label>
+                        <input type="number" id="tax-rate" value="18" min="0" max="100">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn"><i class="fas fa-save"></i> Save Changes</button>
+                        <button type="reset" class="btn btn-danger"><i class="fas fa-undo"></i> Reset</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- More settings tabs would go here -->
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality
+        const settingsTabs = document.querySelectorAll('.settings-tab');
+        const settingsContents = document.querySelectorAll('.settings-content');
+        
+        settingsTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                
+                settingsTabs.forEach(t => t.classList.remove('active'));
+                settingsContents.forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(${tabId}-settings).classList.add('active');
+            });
+        });
+
+        // Maintenance mode toggle
+        document.getElementById('maintenance-mode').addEventListener('change', function() {
+            document.getElementById('maintenance-message').disabled = !this.checked;
+        });
+
+        // Form submissions
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Settings saved successfully!');
+                // In a real app, you would send data to your backend here
+            });
+        });
+
+        // Logout functionality
+        document.querySelector('.logout-btn').addEventListener('click', function() {
+            if(confirm('Are you sure you want to logout?')) {
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html>

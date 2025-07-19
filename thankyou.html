@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - LezGO</title>
+    <link rel="stylesheet" href="thankyou.css">
+    <!-- Include jsPDF library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+    <!-- Header - Black with Green Accents -->
+    <header>
+        <div class="header-container">
+            <a href="homepage.html" class="logo">LezGO</a>
+            <nav>
+                <a href="homepage.html" class="nav-link">Back to Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="thankyou-container">
+        <div class="thankyou-card">
+            <div class="thankyou-icon">✓</div>
+            <h1>Payment Successful!</h1>
+            <p>Your booking is now complete. Thank you for choosing LezGO.</p>
+            
+            <div class="summary">
+                <p>Booking ID: <span id="thankyouBookingId"></span></p>
+                <p>Payment ID: <span id="paymentId"></span></p>
+                <p>Amount Paid: <span id="paidAmount"></span></p>
+                <p>Payment Date: <span id="paymentDate"></span></p>
+            </div>
+            
+            <div class="actions">
+                <a href="homepage.html" class="btn btn-primary">Return to Home</a>
+                <button id="downloadReceipt" class="btn btn-secondary">Download Receipt</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer - Black with Green Accents -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <div class="copyright">
+                &copy; LezGO 2025. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="thankyou.js"></script>
+</body>
+</html>

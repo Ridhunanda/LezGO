@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - LezGO</title>
+    <link rel="stylesheet" href="customer.css">
+    <style>
+        /* Additional styles for payment options */
+        .payment-methods {
+            margin-bottom: 20px;
+        }
+        .payment-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        .payment-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+        }
+        .payment-tab.active {
+            border-color: #ddd;
+            border-bottom: 1px solid white;
+            background: white;
+            font-weight: bold;
+            color: #28a745;
+        }
+        .payment-panel {
+            display: none;
+        }
+        .payment-panel.active {
+            display: block;
+        }
+        .upi-apps {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .upi-app {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .upi-app:hover {
+            border-color: #28a745;
+        }
+        .upi-app img {
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        .payment-success {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #28a745;
+        }
+        .payment-success .checkmark {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header - Black with Green Accents -->
+    <header>
+        <div class="header-container">
+            <a href="homepage.html" class="logo">LezGO</a>
+            <nav>
+                <a href="homepage.html" class="nav-link">Back to Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="payment-container">
+        <h1>Complete Your Payment</h1>
+        
+        <div class="payment-summary">
+            <h3>Booking Summary</h3>
+            <div class="summary-details">
+                <p>Booking ID: <span id="paymentBookingId"></span></p>
+                <p>Amount Due: <span id="paymentAmount">₹500.00</span></p>
+            </div>
+        </div>
+        
+        <div class="payment-methods">
+            <h3>Choose Payment Method</h3>
+            
+            <div class="payment-tabs">
+                <div class="payment-tab active" data-target="upi-panel">UPI</div>
+                <div class="payment-tab" data-target="card-panel">Credit/Debit Card</div>
+                <div class="payment-tab" data-target="netbanking-panel">Net Banking</div>
+                <div class="payment-tab" data-target="wallet-panel">Wallets</div>
+            </div>
+            
+            <!-- UPI Payment Panel -->
+            <div id="upi-panel" class="payment-panel active">
+                <form id="upi-form">
+                    <div class="form-group">
+                        <label for="upi-id">UPI ID</label>
+                        <input type="text" id="upi-id" placeholder="yourname@upi" required>
+                    </div>
+                    
+                    <div class="upi-apps">
+                        <div class="upi-app" data-app="gpay">
+                            <img src="https://static.vecteezy.com/system/resources/previews/017/221/853/original/google-pay-logo-transparent-free-png.png" alt="Google Pay">
+                        </div>
+                        <div class="upi-app" data-app="phonepe">
+                            <img src="https://cdn.freelogovectors.net/wp-content/uploads/2023/11/phonepe_logo-freelogovectors.net_.png" alt="PhonePe">
+                        </div>
+                        <div class="upi-app" data-app="paytm">
+                            <img src="https://th.bing.com/th/id/OIP.ivx34rvqm9h9ac5yUd3aUgHaEK?rs=1&pid=ImgDetMain" alt="Paytm">
+                        </div>
+                        <div class="upi-app" data-app="amazonpay">
+                            <img src="https://yt3.ggpht.com/-6BoPFIpYT7k/AAAAAAAAAAI/AAAAAAAAAAA/G-jxZwj7esg/s900-c-k-no-mo-rj-c0xffffff/photo.jpg" alt="Amazon Pay">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-submit">Pay via UPI</button>
+                </form>
+            </div>
+            
+            <!-- Card Payment Panel -->
+            <div id="card-panel" class="payment-panel">
+                <form id="card-form">
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number</label>
+                        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cardName">Name on Card</label>
+                        <input type="text" id="cardName" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expiryDate">Expiry Date</label>
+                            <input type="text" id="expiryDate" placeholder="MM/YY" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" placeholder="123" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="save-card"> Save card for faster payments
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-submit">Pay Now</button>
+                </form>
+            </div>
+            
+            <!-- Net Banking Panel -->
+            <div id="netbanking-panel" class="payment-panel">
+                <form id="netbanking-form">
+                    <div class="form-group">
+                        <label for="bank-select">Select Bank</label>
+                        <select id="bank-select" required>
+                            <option value="">-- Select Bank --</option>
+                            <option value="sbi">State Bank of India</option>
+                            <option value="hdfc">HDFC Bank</option>
+                            <option value="icici">ICICI Bank</option>
+                            <option value="axis">Axis Bank</option>
+                            <option value="kotak">Kotak Mahindra Bank</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-submit">Proceed to Net Banking</button>
+                </form>
+            </div>
+            
+            <!-- Wallet Panel -->
+            <div id="wallet-panel" class="payment-panel">
+                <form id="wallet-form">
+                    <div class="form-group">
+                        <label>Select Wallet</label>
+                        <div class="wallet-options">
+                            <label class="wallet-option">
+                                <input type="radio" name="wallet" value="paytm" required>
+                                <img src="assets/paytm-wallet.png" alt="Paytm Wallet">
+                            </label>
+                        
+                            <label class="wallet-option">
+                                <input type="radio" name="wallet" value="amazonpay">
+                                <img src="assets/amazonpay-wallet.png" alt="Amazon Pay">
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-submit">Pay via Wallet</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="payment-success" class="payment-success">
+        <div class="checkmark">✓</div>
+        <h2>Payment Successful!</h2>
+        <p>Redirecting to booking confirmation...</p>
+    </div>
+</div>
+
+    <!-- Footer - Black with Green Accents -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <div class="copyright">
+                &copy; LezGO 2025. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="payment.js"></script>
+    <script>
+        // Tab switching functionality
+        document.querySelectorAll('.payment-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and panels
+                document.querySelectorAll('.payment-tab, .payment-panel').forEach(el => {
+                    el.classList.remove('active');
+                });
+                
+                // Add active class to clicked tab and corresponding panel
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.target).classList.add('active');
+            });
+        });
+        
+        // UPI app selection
+        document.querySelectorAll('.upi-app').forEach(app => {
+            app.addEventListener('click', () => {
+                document.getElementById('upi-id').value = app.dataset.app;
+            });
+        });
+
+         // Handle all payment form submissions
+         document.querySelectorAll('form[id$="-form"]').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Show processing indicator
+                const submitBtn = this.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Processing...';
+                
+                // Simulate payment processing (2 seconds)
+                setTimeout(() => {
+                    // Hide all payment forms
+                    document.querySelectorAll('.payment-panel').forEach(panel => {
+                        panel.style.display = 'none';
+                    });
+                    
+                    // Show success message
+                    document.getElementById('payment-success').style.display = 'block';
+                    
+                    // Store payment confirmation
+                    const paymentData = {
+                        paymentId: 'PAY-' + Math.random().toString(36).substr(2, 8).toUpperCase(),
+                        amount: document.getElementById('paymentAmount').textContent,
+                        timestamp: new Date().toISOString(),
+                        method: this.id.replace('-form', '')
+                    };
+                    localStorage.setItem('paymentConfirmation', JSON.stringify(paymentData));
+                    
+                    // Redirect after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = 'thankyou.html';
+                    }, 3000);
+                    
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - LezGO Vehicle Rental</title>
+    <link rel="stylesheet" href="reg.css">
+</head>
+<body>
+    
+     <!-- Header - Black with Green Accents -->
+     <header>
+        <div class="header-container">
+            <a href="homepage.html" class="logo">LezGO</a>
+            <nav>
+                <a href="homepage.html" class="nav-link">Back to Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="register-box">
+            <h2>Create Account</h2>
+            <form id="register-form">
+                <div class="textbox">
+                    <input type="text" id="fullname" placeholder="Full Name" required>
+                </div>
+                <div class="textbox">
+                    <input type="email" id="email" placeholder="Email Address" required>
+                </div>
+                <div class="textbox">
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <div class="textbox">
+                    <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+                </div>
+                <button type="submit" class="btn">Register</button>
+                <div class="login-link">
+                    Already have an account? <a href="log.html">Login here</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer - Black with Green Accents -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <div class="copyright">
+                &copy; LezGO 2025. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const fullname = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords don't match!");
+                return;
+            }
+
+            const formData = new URLSearchParams();
+            formData.append('fullname', fullname);
+            formData.append('email', email);
+            formData.append('password', password);
+
+            try {
+            const response = await fetch('http://localhost:4000/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData.toString()
+            });
+
+            const result = await response.json();
+
+            if (response.status === 201) {
+                // ADD THIS CODE BLOCK - START
+                // Store user data in localStorage
+                localStorage.setItem('currentUser', JSON.stringify({
+                    id: result.userId,
+                    name: fullname,
+                    email: email,
+                    joined: new Date().toISOString()
+                }));
+                
+                // Redirect to profile page instead of homepage
+                window.location.href = 'profile.html';
+                // ADD THIS CODE BLOCK - END
+            } else {
+                alert(result.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred during registration');
+        }
+    });
+    </script>
+</body>
+</html>

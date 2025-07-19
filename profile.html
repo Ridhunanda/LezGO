@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - LezGO</title>
+    <link rel="stylesheet" href="profile.css">
+    <style>
+        /* Basic profile styling */
+        .profile-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #28a745;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin-right: 20px;
+        }
+        .profile-info h2 {
+            margin: 0;
+            color: #333;
+        }
+        .profile-info p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .section-title {
+            color: #28a745;
+            border-bottom: 2px solid #28a745;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        .booking-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .booking-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .booking-vehicle {
+            font-weight: bold;
+        }
+        .booking-date {
+            color: #666;
+            font-size: 0.9em;
+        }
+        .booking-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .detail-item {
+            margin-bottom: 5px;
+        }
+        .detail-label {
+            font-weight: bold;
+            color: #555;
+        }
+        .no-bookings {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header - Black with Green Accents -->
+    <header>
+        <div class="header-container">
+            <a href="homepage.html" class="logo">LezGO</a>
+            <nav>
+                <a href="homepage.html" class="nav-link">Home</a>
+                <a href="profile.html" class="nav-link">My Profile</a>
+                <a href="logout.html" class="nav-link">Logout</a>
+            </nav>
+        </div>
+    </header>
+    <div id="header-container"></div>
+   
+<script>
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-container').innerHTML = data;
+            updateHeaderProfile(); // Call this if needed
+        });
+</script>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-pic" id="profileInitial"></div>
+            <div class="profile-info">
+                <h2 id="profileName">Loading...</h2>
+                <p id="profileEmail"></p>
+                <p>Member since: <span id="joinDate"></span></p>
+            </div>
+        </div>
+
+        <h3 class="section-title">My Bookings</h3>
+        <div id="bookings-container">
+            <div class="no-bookings">Loading your bookings...</div>
+        </div>
+
+        <h3 class="section-title">Payment History</h3>
+        <div id="payments-container">
+            <div class="no-bookings">Loading payment history...</div>
+        </div>
+    </div>
+
+    <!-- Footer - Black with Green Accents -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <div class="copyright">
+                &copy; LezGO 2025. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Load user data
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (!currentUser) {
+                window.location.href = 'log.html';
+                return;
+            }
+
+            // Display basic profile info
+            document.getElementById('profileName').textContent = currentUser.name;
+            document.getElementById('profileEmail').textContent = currentUser.email;
+            document.getElementById('joinDate').textContent = new Date(currentUser.joined).toLocaleDateString();
+            document.getElementById('profileInitial').textContent = currentUser.name.charAt(0).toUpperCase();
+
+            try {
+                // Fetch user bookings
+                const bookingsResponse = await fetch(`http://localhost:4000/bookings/user/${currentUser.id}`);
+                const bookings = await bookingsResponse.json();
+
+                const bookingsContainer = document.getElementById('bookings-container');
+                
+                if (bookings.length > 0) {
+                    bookingsContainer.innerHTML = '';
+                    bookings.forEach(booking => {
+                        const pickupDate = new Date(booking.pickupDate);
+                        const dropoffDate = new Date(booking.dropoffDate);
+                        
+                        const bookingCard = document.createElement('div');
+                        bookingCard.className = 'booking-card';
+                        bookingCard.innerHTML = `
+                            <div class="booking-header">
+                                <span class="booking-vehicle">${booking.vehicleMake} ${booking.vehicleModel}</span>
+                                <span class="booking-status" style="color: ${booking.status === 'completed' ? '#28a745' : '#ffc107'}">
+                                    ${booking.status}
+                                </span>
+                            </div>
+                            <div class="booking-date">
+                                ${pickupDate.toLocaleDateString()} - ${dropoffDate.toLocaleDateString()}
+                            </div>
+                            <div class="booking-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Booking ID:</span>
+                                    <span>${booking.bookingId}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Pickup:</span>
+                                    <span>${booking.pickupPlace}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Dropoff:</span>
+                                    <span>${booking.dropoffPlace}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Total:</span>
+                                    <span>₹${booking.totalAmount.toFixed(2)}</span>
+                                </div>
+                            </div>
+                        `;
+                        bookingsContainer.appendChild(bookingCard);
+                    });
+                } else {
+                    bookingsContainer.innerHTML = '<div class="no-bookings">You have no bookings yet</div>';
+                }
+
+                // Fetch payment history
+                const paymentsResponse = await fetch(`http://localhost:4000/payments/user/${currentUser.id}`);
+                const payments = await paymentsResponse.json();
+
+                const paymentsContainer = document.getElementById('payments-container');
+                
+                if (payments.length > 0) {
+                    paymentsContainer.innerHTML = '';
+                    payments.forEach(payment => {
+                        const paymentDate = new Date(payment.timestamp);
+                        
+                        const paymentCard = document.createElement('div');
+                        paymentCard.className = 'booking-card';
+                        paymentCard.innerHTML = `
+                            <div class="booking-header">
+                                <span class="booking-vehicle">Payment ID: ${payment.paymentId}</span>
+                                <span style="color: ${payment.status === 'success' ? '#28a745' : '#dc3545'}">
+                                    ${payment.status}
+                                </span>
+                            </div>
+                            <div class="booking-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Date:</span>
+                                    <span>${paymentDate.toLocaleString()}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Amount:</span>
+                                    <span>₹${payment.amount.toFixed(2)}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Method:</span>
+                                    <span>${payment.method}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Booking ID:</span>
+                                    <span>${payment.bookingId}</span>
+                                </div>
+                            </div>
+                        `;
+                        paymentsContainer.appendChild(paymentCard);
+                    });
+                } else {
+                    paymentsContainer.innerHTML = '<div class="no-bookings">No payment history found</div>';
+                }
+
+            } catch (error) {
+                console.error('Error loading profile data:', error);
+                document.getElementById('bookings-container').innerHTML = 
+                    '<div class="no-bookings">Error loading bookings</div>';
+                document.getElementById('payments-container').innerHTML = 
+                    '<div class="no-bookings">Error loading payments</div>';
+            }
+        });
+    </script>
+</body>
+</html>

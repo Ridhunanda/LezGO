@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Vehicles</title>
+    <link rel="stylesheet" href="indexs.css">
+</head>
+<body>
+    <!-- Header - Black with Green Accents -->
+    <header>
+        <div class="header-container">
+            <a href="homepage.html" class="logo">LezGO</a>
+            <nav>
+                <a href="homepage.html" class="nav-link">Back to Home</a>
+            </nav>
+        </div>
+    </header>
+<!-- Filter Section -->
+<div class="filter-section">
+    <div class="filter-group">
+        <label for="vehicle_type">Vehicle Type:</label>
+        <select id="vehicle_type">
+            <option value="all">All Types</option>
+            <option value="Car">Car</option>  <!-- Must match DB exactly -->
+            <option value="Minivan">Minivan</option>
+            <option value="Bike">Bike</option>
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <label for="transmission">Transmission:</label>
+        <select id="transmission">
+            <option value="all">All</option>
+            <option value="Manual">Manual</option>
+            <option value="Automatic">Automatic</option>
+            <option value="AMT">AMT</option>
+            <!-- Add other transmission types that exist in your database -->
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <label for="fuel_type">Fuel Type:</label>
+        <select id="fuel_type">
+            <option value="all">All</option>
+            <option value="Petrol">Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Electric">Electric</option>
+            <option value="Hybrid">Hybrid</option>
+            <!-- Add other fuel types that exist in your database -->
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <label for="Rental Price per day">Rental Price(per day)</label>
+    <select id="rental_price_per_day">
+        <option value="all">All Prices</option>
+        <option value="0-1000">Under ₹1,000</option>
+        <option value="1000-2000">₹1,000 - ₹2,000</option>
+        <option value="2000-3000">₹2,000 - ₹3,000</option>
+        <option value="3000-5000">₹3,000 - ₹5,000</option>
+        <option value="5000+">Over ₹5,000</option>
+    </select>
+
+    <div class="filter-group">
+        <label for="seats">Seats:</label>
+        <select id="seats">
+            <option value="all">Any</option>
+            <option value="Single Seat">Single Seat</option>
+            <option value="Split Seat">Split Seat</option>
+            <option value="4 Seater">4 Seater</option>
+            <option value="5 Seater">5 Seater</option>
+            <option value="7 Seater">7 Seater</option>
+            <option value="7+ Seater">7+ Seater</option>
+        </select>
+    </div>
+
+    <button id="apply-filters" class="btn btn-filter">Apply Filters</button>
+    <button id="reset-filters" class="btn btn-filter">Reset Filters</button>
+</div>
+
+    
+    <h1>Available Vehicles</h1>
+
+    <!-- Vehicle List -->
+    <div id="vehicle-list" class="vehicle-container"></div>
+
+    <div class="load-more-container">
+        <button id="loadMoreBtn" class="load-more-btn">Load More</button>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <div class="copyright">
+                &copy; LezGO 2025. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>

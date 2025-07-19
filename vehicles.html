@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LezGO - Vehicle Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Base styles from dashboard */
+        :root {
+            --primary-green: #28a745;
+            --dark-green: #218838;
+            --light-green: #f1f8e9;
+            --white: #ffffff;
+            --black: #212529;
+            --gray: #6c757d;
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: var(--light-gray);
+        }
+
+        /* Sidebar and main content styles from dashboard */
+        /* ... (include all sidebar and main content styles from dashboard.html) ... */
+         /* Sidebar Styles */
+         .sidebar {
+            width: 250px;
+            background-color: var(--black);
+            color: var(--white);
+            transition: all 0.3s;
+            height: 100vh;
+            position: fixed;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            background-color: var(--dark-gray);
+            border-bottom: 2px solid var(--primary-green);
+        }
+
+        .sidebar-header h3 {
+            color: var(--primary-green);
+            font-size: 1.3rem;
+        }
+
+        .sidebar-menu {
+            padding: 1rem 0;
+        }
+
+        .sidebar-menu ul {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background-color: var(--dark-gray);
+            color: var(--primary-green);
+            border-left: 3px solid var(--primary-green);
+        }
+
+        .sidebar-menu i {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+          /* Main Content Styles */
+          .main-content {
+            flex: 1;
+            margin-left: 250px;
+            transition: all 0.3s;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            background-color: var(--white);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-nav-left h2 {
+            color: var(--black);
+            font-size: 1.5rem;
+        }
+
+        .top-nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+        }
+
+        .user-profile span {
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .logout-btn {
+            margin-left: 1.5rem;
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--dark-green);
+        }
+
+
+        /* Vehicle Management Specific Styles */
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 0 1.5rem;
+        }
+
+        .add-vehicle-btn {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .add-vehicle-btn:hover {
+            background-color: var(--dark-green);
+        }
+
+        .add-vehicle-btn i {
+            margin-right: 0.5rem;
+        }
+
+        .vehicle-filters {
+            background-color: var(--white);
+            padding: 1rem 1.5rem;
+            margin: 0 1.5rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: var(--light-green);
+        }
+
+        .apply-filters {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .apply-filters:hover {
+            background-color: var(--dark-green);
+        }
+
+        .vehicle-table {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 0 1.5rem;
+        }
+
+        .vehicle-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .vehicle-table th,
+        .vehicle-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .vehicle-table th {
+            background-color: var(--light-green);
+            color: var(--black);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .vehicle-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .vehicle-image {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .vehicle-status {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-available {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-rented {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-maintenance {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.375rem 0.75rem;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .edit-btn {
+            background-color: var(--primary-green);
+            color: var(--white);
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: var(--white);
+        }
+
+        .view-btn {
+            background-color: #17a2b8;
+            color: var(--white);
+        }
+
+        .action-btn i {
+            margin-right: 0.25rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            padding: 1rem 1.5rem;
+            background-color: var(--primary-green);
+            color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .modal-header h3 {
+            font-size: 1.25rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .cancel-btn {
+            background-color: var(--gray);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .save-btn {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .vehicle-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .filter-row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+   <!-- Sidebar -->
+   <div class="sidebar">
+    <div class="sidebar-header">
+        <h3>LezGO Admin</h3>
+    </div>
+    <div class="sidebar-menu">
+        <ul>
+            <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/admin.html" class="active"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+            <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/vehicles.html"><i class="fas fa-car"></i> <span>Vehicle Management</span></a></li>
+            <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/bookings.html"><i class="fas fa-calendar-check"></i> <span>Bookings</span></a></li>
+            <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/finantial.html"><i class="fas fa-users"></i> <span>finantial</span></a></li>
+            <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/maintanance.html"><i class="fas fa-wrench"></i> <span>Maintenance</span></a></li>
+            <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/reports.html"><i class="fas fa-chart-line"></i> <span>Reports</span></a></li>
+            <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/settings.html"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
+        </ul>
+    </div>
+</div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navigation (same as dashboard) -->
+        <div class="top-nav">
+            <div class="top-nav-left">
+                <h2>Vehicle Management</h2>
+            </div>
+            <div class="top-nav-right">
+                <div class="user-profile">
+                    <img src="C:\Users\RIDHUNANDA\Documents\vehicle project\nodejsproject\public\logo.jpg" alt="Admin User">
+                    <span>Admin User</span>
+                </div>
+                <button class="logout-btn">Logout</button>
+            </div>
+        </div>
+
+        <!-- Vehicle Management Content -->
+        <div class="content-header">
+            <h3 class="section-title">All Vehicles</h3>
+            <button class="add-vehicle-btn" id="addVehicleBtn">
+                <i class="fas fa-plus"></i> Add Vehicle
+            </button>
+        </div>
+
+        <!-- Vehicle Filters -->
+        <div class="vehicle-filters">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="vehicle-type">Vehicle Type</label>
+                    <select id="vehicle-type">
+                        <option value="">All Types</option>
+                        <option value="sedan">Sedan</option>
+                        <option value="suv">SUV</option>
+                        <option value="truck">Truck</option>
+                        <option value="luxury">Luxury</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="vehicle-status">Status</label>
+                    <select id="vehicle-status">
+                        <option value="">All Statuses</option>
+                        <option value="available">Available</option>
+                        <option value="rented">Rented</option>
+                        <option value="maintenance">Maintenance</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="search">Search</label>
+                    <input type="text" id="search" placeholder="Search by make, model...">
+                </div>
+            </div>
+            <button class="apply-filters">Apply Filters</button>
+        </div>
+
+        <!-- Vehicle Table -->
+        <div class="vehicle-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Make & Model</th>
+                        <th>Type</th>
+                        <th>Year</th>
+                        <th>Daily Rate</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add Vehicle Modal -->
+    <div class="modal" id="addVehicleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Vehicle</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="vehicleForm">
+                    <div class="form-group">
+                        <label for="make">Make</label>
+                        <input type="text" id="make" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="model">Model</label>
+                        <input type="text" id="model" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Year</label>
+                        <input type="number" id="year" min="2000" max="2023" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Vehicle Type</label>
+                        <select id="type" required>
+                            <option value="">Select Type</option>
+                            <option value="sedan">Sedan</option>
+                            <option value="suv">SUV</option>
+                            <option value="truck">Truck</option>
+                            <option value="sports">Sports</option>
+                            <option value="luxury">Luxury</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dailyRate">Daily Rate ($)</label>
+                        <input type="number" id="dailyRate" min="1" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status" required>
+                            <option value="available">Available</option>
+                            <option value="rented">Rented</option>
+                            <option value="maintenance">Maintenance</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Image URL</label>
+                        <input type="text" id="image" placeholder="https://example.com/image.jpg">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn">Cancel</button>
+                        <button type="submit" class="save-btn">Save Vehicle</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        const addVehicleBtn = document.getElementById('addVehicleBtn');
+        const addVehicleModal = document.getElementById('addVehicleModal');
+        const closeBtn = document.querySelector('.close-btn');
+        const cancelBtn = document.querySelector('.cancel-btn');
+        const vehicleForm = document.getElementById('vehicleForm');
+
+        addVehicleBtn.addEventListener('click', () => {
+            addVehicleModal.style.display = 'flex';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            addVehicleModal.style.display = 'none';
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            addVehicleModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === addVehicleModal) {
+                addVehicleModal.style.display = 'none';
+            }
+        });
+
+        vehicleForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Here you would handle form submission to your backend
+            alert('Vehicle added successfully!');
+            addVehicleModal.style.display = 'none';
+            vehicleForm.reset();
+        });
+
+        // Simple logout functionality
+        document.querySelector('.logout-btn').addEventListener('click', function() {
+            if(confirm('Are you sure you want to logout?')) {
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html>

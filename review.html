@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Reviews - LezGO Rentals</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="review.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">LezGO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/homepage.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/indexs.html">Vehicles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/review.html">Reviews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account">My Account</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="container">
+            <h1 class="display-4">Customer Reviews</h1>
+            <p class="lead">See what our customers say about their LezGO experience</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <h3>Average Rating</h3>
+                    <div class="rating mb-2">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="stats-number">4.7</p>
+                    <p>out of 5 stars</p>
+                </div>
+
+                <div class="stats-card">
+                    <h3>Total Reviews</h3>
+                    <p class="stats-number">1,248</p>
+                    <p>and counting</p>
+                </div>
+
+                <div class="stats-card">
+                    <h3>Would Recommend</h3>
+                    <p class="stats-number">94%</p>
+                    <p>of our customers</p>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Recent Reviews</h2>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown">
+                            Sort by: Newest
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Newest</a></li>
+                            <li><a class="dropdown-item" href="#">Oldest</a></li>
+                            <li><a class="dropdown-item" href="#">Highest Rating</a></li>
+                            <li><a class="dropdown-item" href="#">Lowest Rating</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="review-card card mb-4">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="C:\Users\RIDHUNANDA\Documents\vehicle project\nodejsproject\public\Royal Enfield\Bear 650.jpg" class="vehicle-img w-100" alt="Vehicle">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="card-title">Amazing experience!</h5>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <p class="card-text">Rented a Royal Enfield Bear 650 for a week and it was perfect. Clean, comfortable, and great fuel economy. </p>
+                                <p class="text-muted">By: Rahul Sharma • 15 May 2023</p>
+                                <p><strong>Vehicle:</strong> Royal Enfield Bear 650</p>
+                                <p><strong>Rental Duration:</strong> 7 days</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card card mb-4">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="C:\Users\RIDHUNANDA\Documents\vehicle project\nodejsproject\public\Kiger RXE.jpg" class="vehicle-img w-100" alt="Vehicle">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="card-title">Great service!</h5>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                                <p class="card-text">The Renault Kiger RXE was in excellent condition. Only minor issue was a small scratch that wasn't mentioned, but overall very happy with the service.</p>
+                                <p class="text-muted">By: Priya Patel • 02 June 2023</p>
+                                <p><strong>Vehicle:</strong>Renault Kiger RXE</p>
+                                <p><strong>Rental Duration:</strong> 3 days</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <nav aria-label="Review pagination">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="review-form">
+            <h2 class="mb-4">Leave a Review</h2>
+            <form id="reviewForm">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="customerName" class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="customerName" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="customerEmail" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="customerEmail" required>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="bookingId" class="form-label">Booking ID</label>
+                    <input type="text" class="form-control" id="bookingId" required>
+                    <small class="text-muted">You can find this in your booking confirmation email</small>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="vehicleName" class="form-label">Vehicle Rented</label>
+                    <input type="text" class="form-control" id="vehicleName" placeholder="e.g. Toyota Camry 2022" required>
+                    <small class="text-muted">Please enter the exact vehicle model you rented</small>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Rating</label>
+                    <div class="rating-input mb-2">
+                        <i class="far fa-star" data-rating="1"></i>
+                        <i class="far fa-star" data-rating="2"></i>
+                        <i class="far fa-star" data-rating="3"></i>
+                        <i class="far fa-star" data-rating="4"></i>
+                        <i class="far fa-star" data-rating="5"></i>
+                        <input type="hidden" id="ratingValue" name="rating" required>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="reviewText" class="form-label">Your Review</label>
+                    <textarea class="form-control" id="reviewText" rows="4" 
+                              placeholder="Share your experience with the vehicle and our service..." required></textarea>
+                </div>
+                
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" id="consentCheck" required>
+                    <label class="form-check-label" for="consentCheck">
+                        I agree to have my review published on LezGO website
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-100 py-2">Submit Review</button>
+            </form>
+        </div>
+
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>LezGO Rentals</h5>
+                    <p>Your trusted partner for vehicle rentals across India.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/homepage.html" class="text-white">Home</a></li>
+                        <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/indexs.html" class="text-white">Vehicles</a></li>
+                        <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/aboutUs.html" class="text-white">About Us</a></li>
+                        <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/contact.html" class="text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <p><i class="fas fa-phone me-2"></i> +91 9876543210</p>
+                    <p><i class="fas fa-envelope me-2"></i> support@lezgo.com</p>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p>&copy; 2023 LezGO Rentals. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+     // Star rating interaction
+     document.querySelectorAll('.rating-input i').forEach(star => {
+        star.addEventListener('click', function() {
+            const rating = this.getAttribute('data-rating');
+            document.getElementById('ratingValue').value = rating;
+            
+            // Update star display
+            const stars = document.querySelectorAll('.rating-input i');
+            stars.forEach((s, index) => {
+                s.classList.toggle('active', index < rating);
+                s.classList.toggle('far', index >= rating);
+                s.classList.toggle('fas', index < rating);
+            });
+        });
+    });
+
+    // Form validation and submission
+    document.getElementById('reviewForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Basic validation
+        if (!document.getElementById('consentCheck').checked) {
+            alert('Please agree to have your review published');
+            return;
+        }
+        
+        // Here you would typically send the data to your server
+        const reviewData = {
+            name: document.getElementById('customerName').value,
+            email: document.getElementById('customerEmail').value,
+            bookingId: document.getElementById('bookingId').value,
+            vehicleName: document.getElementById('vehicleName').value,
+            rating: document.getElementById('ratingValue').value,
+            reviewText: document.getElementById('reviewText').value
+        };
+        
+        console.log('Review submitted:', reviewData);
+        
+        // Show success message
+        alert('Thank you for your review! It will be published after verification.');
+        this.reset();
+        
+        // Reset stars
+        document.querySelectorAll('.rating-input i').forEach(star => {
+            star.classList.remove('fas', 'active');
+            star.classList.add('far');
+        });
+    });
+    </script>
+</body>
+</html>

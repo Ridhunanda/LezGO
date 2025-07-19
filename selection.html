@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Rental</title>
+  <link rel="stylesheet" href="selection.css">
+</head>
+<body>
+  <!-- Header - Black with Green Accents -->
+  <header>
+    <div class="header-container">
+      <a href="homepage.html" class="logo">LezGO</a>
+      <nav>
+        <a href="homepage.html" class="nav-link">Back to Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1>Rent a Vehicle</h1>
+    <form id="vehicle-form" onsubmit="handleFormSubmission(event)">
+      <label for="pickup-state">Select Pickup State:</label>
+      <select id="pickup-state" name="pickup-state" onchange="updateOptions()" required>
+        <option value="">Select a Pickup State</option>
+        <option value="AP">Andhra Pradesh</option>
+        <option value="CG">Chhattisgarh</option>
+        <option value="DL">Delhi</option>
+        <option value="GA">Goa</option>
+        <option value="GJ">Gujarat</option>
+        <option value="HR">Haryana</option>
+        <option value="KA">Karnataka</option>
+        <option value="KL">Kerala</option>
+        <option value="MP">Madhya Pradesh</option>
+        <option value="MH">Maharashtra</option>
+        <option value="OD">Odisha</option>
+        <option value="PB">Punjab</option>
+        <option value="TN">Tamil Nadu</option>
+        <option value="UP">Uttar Pradesh</option>
+        <option value="WB">West Bengal</option>
+        <option value="PY">Puducherry</option>
+      </select>
+
+      <label for="pickup-location">Pick-up Location:</label>
+      <select id="pickup-location" name="pickup-location" required>
+        <option value="">Select a Location</option>
+      </select>
+
+      <div class="datetime-row">
+        <div class="datetime-group">
+          <input type="date" id="pickup-date" name="pickup-date" required>
+          <input type="time" id="pickup-time" name="pickup-time" required>
+        </div>
+      </div>
+
+      <label for="dropoff-state">Select Drop-off State:</label>
+      <select id="dropoff-state" name="dropoff-state" onchange="updateOptions()" required>
+        <option value="">Select a Drop-off State</option>
+        <option value="AP">Andhra Pradesh</option>
+        <option value="CG">Chhattisgarh</option>
+        <option value="DL">Delhi</option>
+        <option value="GA">Goa</option>
+        <option value="GJ">Gujarat</option>
+        <option value="HR">Haryana</option>
+        <option value="KA">Karnataka</option>
+        <option value="KL">Kerala</option>
+        <option value="MP">Madhya Pradesh</option>
+        <option value="MH">Maharashtra</option>
+        <option value="OD">Odisha</option>
+        <option value="PB">Punjab</option>
+        <option value="TN">Tamil Nadu</option>
+        <option value="UP">Uttar Pradesh</option>
+        <option value="WB">West Bengal</option>
+        <option value="PY">Puducherry</option>
+      </select>
+
+      <label for="drop-off">Drop-off Location:</label>
+      <select id="drop-off" name="drop-off" required>
+        <option value="">Select a Location</option>
+      </select>
+
+      <div class="datetime-row">
+        <div class="datetime-group">
+          <input type="date" id="return-date" name="return-date" required>
+          <input type="time" id="return-time" name="return-time" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn">Confirm Booking</button>
+    </form>
+  </div>
+
+  <!-- Footer - Black with Green Accents -->
+  <footer>
+    <div class="footer-content">
+        <div class="footer-links">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="contact.html">Contact Us</a>
+        </div>
+        <div class="copyright">
+            &copy; LezGO 2025. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+  <script>
+    // Update the options for locations based on the selected state
+    async function updateOptions() {
+      let pickupState = document.getElementById("pickup-state").value;
+      let dropoffState = document.getElementById("dropoff-state").value;
+      let pickupSelect = document.getElementById("pickup-location");
+      let dropoffSelect = document.getElementById("drop-off");
+
+      // Clear previous options
+      pickupSelect.innerHTML = "<option value=''>Select a Location</option>";
+      dropoffSelect.innerHTML = "<option value=''>Select a Location</option>";
+
+      // Fetch and populate locations for Pickup state
+      if (pickupState) {
+        try {
+          let locationResponse = await fetch(`http://localhost:4000/getLocations/${pickupState}`);
+          let locations = await locationResponse.json();
+          
+          console.log("Pickup locations:", locations);
+
+          locations.forEach(loc => {
+            let option1 = new Option(loc.location_name, loc.location_name);
+            pickupSelect.add(option1);
+          });
+        } catch (error) {
+          console.error("Error fetching pickup locations:", error);
+        }
+      }
+
+      // Fetch and populate locations for Drop-off state
+      if (dropoffState) {
+        try {
+          let locationResponse = await fetch(`http://localhost:4000/getLocations/${dropoffState}`);
+          let locations = await locationResponse.json();
+          
+          console.log("Dropoff locations:", locations);
+
+          locations.forEach(loc => {
+            let option2 = new Option(loc.location_name, loc.location_name);
+            dropoffSelect.add(option2);
+          });
+        } catch (error) {
+          console.error("Error fetching drop-off locations:", error);
+        }
+      }
+    }
+
+    function handleFormSubmission(event) {
+        event.preventDefault();
+
+        // Get all form values
+        const formData = {
+            pickupState: document.getElementById("pickup-state").value,
+            pickupLocation: document.getElementById("pickup-location").value,
+            dropoffState: document.getElementById("dropoff-state").value,
+            dropoffLocation: document.getElementById("drop-off").value,
+            pickupDate: document.getElementById("pickup-date").value,
+            pickupTime: document.getElementById("pickup-time").value,
+            dropoffDate: document.getElementById("return-date").value,
+            dropoffTime: document.getElementById("return-time").value
+        };
+
+        // Validate all required fields
+        for (const [key, value] of Object.entries(formData)) {
+            if (!value) {
+                alert(`Please fill in the ${key.replace(/([A-Z])/g, ' $1').toLowerCase()} field`);
+                return;
+            }
+        }
+
+        // Store in localStorage for the next page
+        localStorage.setItem('locationData', JSON.stringify(formData));
+
+        // Redirect to vehicle selection
+        window.location.href = "indexs.html";
+    }
+  </script>
+</body>
+</html>

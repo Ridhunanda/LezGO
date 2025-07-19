@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LezGO - Reports & Analytics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Base styles from dashboard */
+        :root {
+            --primary-green: #28a745;
+            --dark-green: #218838;
+            --light-green: #f1f8e9;
+            --white: #ffffff;
+            --black: #212529;
+            --gray: #6c757d;
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: var(--light-gray);
+        }
+
+        /* Sidebar and main content styles from dashboard */
+        /* ... (include all sidebar and main content styles from dashboard.html) ... */
+         /* Sidebar Styles */
+         .sidebar {
+            width: 250px;
+            background-color: var(--black);
+            color: var(--white);
+            transition: all 0.3s;
+            height: 100vh;
+            position: fixed;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            background-color: var(--dark-gray);
+            border-bottom: 2px solid var(--primary-green);
+        }
+
+        .sidebar-header h3 {
+            color: var(--primary-green);
+            font-size: 1.3rem;
+        }
+
+        .sidebar-menu {
+            padding: 1rem 0;
+        }
+
+        .sidebar-menu ul {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background-color: var(--dark-gray);
+            color: var(--primary-green);
+            border-left: 3px solid var(--primary-green);
+        }
+
+        .sidebar-menu i {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+          /* Main Content Styles */
+          .main-content {
+            flex: 1;
+            margin-left: 250px;
+            transition: all 0.3s;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            background-color: var(--white);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-nav-left h2 {
+            color: var(--black);
+            font-size: 1.5rem;
+        }
+
+        .top-nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+        }
+
+        .user-profile span {
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .logout-btn {
+            margin-left: 1.5rem;
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--dark-green);
+        }
+
+
+        /* Reports Specific Styles */
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 0 1.5rem;
+        }
+
+        .time-period-selector {
+            display: flex;
+            gap: 0.5rem;
+            background-color: var(--white);
+            padding: 0.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .time-period-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background: none;
+            font-weight: 600;
+            color: var(--gray);
+        }
+
+        .time-period-btn.active {
+            background-color: var(--primary-green);
+            color: var(--white);
+        }
+
+        .date-range-picker {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background-color: var(--white);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .date-range-picker input {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: var(--light-green);
+        }
+
+        .apply-btn {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .report-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 0 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .report-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid var(--primary-green);
+        }
+
+        .report-card h3 {
+            font-size: 1rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .report-card .value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 0.5rem;
+        }
+
+        .report-card .change {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .positive {
+            color: var(--primary-green);
+        }
+
+        .negative {
+            color: #dc3545;
+        }
+
+        .chart-container {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 0 1.5rem 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .chart-title {
+            font-size: 1.25rem;
+            color: var(--black);
+            font-weight: 600;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .legend-primary {
+            background-color: var(--primary-green);
+        }
+
+        .legend-secondary {
+            background-color: #17a2b8;
+        }
+
+        .legend-tertiary {
+            background-color: #6c757d;
+        }
+
+        .chart {
+            width: 100%;
+            height: 300px;
+        }
+
+        .report-actions {
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .export-btn {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .report-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .time-period-selector {
+                flex-wrap: wrap;
+            }
+            
+            .date-range-picker {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3>LezGO Admin</h3>
+        </div>
+        <div class="sidebar-menu">
+            <ul>
+                <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/admin.html" class="active"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+                <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/vehicles.html"><i class="fas fa-car"></i> <span>Vehicle Management</span></a></li>
+                <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/bookings.html"><i class="fas fa-calendar-check"></i> <span>Bookings</span></a></li>
+                <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/finantial.html"><i class="fas fa-users"></i> <span>finantial</span></a></li>
+                <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/maintanance.html"><i class="fas fa-wrench"></i> <span>Maintenance</span></a></li>
+                <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/reports.html"><i class="fas fa-chart-line"></i> <span>Reports</span></a></li>
+                <li><a href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/settings.html"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navigation -->
+        <div class="top-nav">
+            <div class="top-nav-left">
+                <h2>Reports & Analytics</h2>
+            </div>
+            <div class="top-nav-right">
+                <div class="user-profile">
+                    <img src="C:\Users\RIDHUNANDA\Documents\vehicle project\nodejsproject\public\logo.jpg" alt="Admin User">
+                    <span>Admin User</span>
+                </div>
+                <button class="logout-btn">Logout</button>
+            </div>
+        </div>
+
+        <!-- Time Period Selector -->
+        <div class="content-header">
+            <div class="time-period-selector">
+                <button class="time-period-btn active">Today</button>
+                <button class="time-period-btn">Week</button>
+                <button class="time-period-btn">Month</button>
+                <button class="time-period-btn">Quarter</button>
+                <button class="time-period-btn">Year</button>
+            </div>
+            <div class="date-range-picker">
+                <span>Custom Range:</span>
+                <input type="date" id="start-date">
+                <span>to</span>
+                <input type="date" id="end-date">
+                <button class="apply-btn">Apply</button>
+            </div>
+        </div>
+
+        <!-- Report Summary Cards -->
+        <div class="report-cards">
+            <div class="report-card">
+                <h3>Total Revenue</h3>
+                <div class="value">$24,580.00</div>
+                <div class="change positive">
+                    <i class="fas fa-arrow-up"></i> 12% from last period
+                </div>
+            </div>
+            <div class="report-card">
+                <h3>Total Bookings</h3>
+                <div class="value">156</div>
+                <div class="change positive">
+                    <i class="fas fa-arrow-up"></i> 8% from last period
+                </div>
+            </div>
+            <div class="report-card">
+                <h3>Vehicle Utilization</h3>
+                <div class="value">78%</div>
+                <div class="change positive">
+                    <i class="fas fa-arrow-up"></i> 5% from last period
+                </div>
+            </div>
+            <div class="report-card">
+                <h3>Avg. Rental Duration</h3>
+                <div class="value">3.2 days</div>
+                <div class="change negative">
+                    <i class="fas fa-arrow-down"></i> 0.5 days from last period
+                </div>
+            </div>
+        </div>
+
+        <!-- Revenue Chart -->
+        <div class="chart-container">
+            <div class="chart-header">
+                <h3 class="chart-title">Revenue by Vehicle Type</h3>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <div class="legend-color legend-primary"></div>
+                        <span>Sedan</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color legend-secondary"></div>
+                        <span>SUV</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color legend-tertiary"></div>
+                        <span>Luxury</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chart" id="revenueByTypeChart"></div>
+        </div>
+
+        <!-- Bookings Chart -->
+        <div class="chart-container">
+            <div class="chart-header">
+                <h3 class="chart-title">Monthly Bookings</h3>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <div class="legend-color legend-primary"></div>
+                        <span>Completed</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color legend-secondary"></div>
+                        <span>Cancelled</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chart" id="monthlyBookingsChart"></div>
+        </div>
+
+        <!-- Export Button -->
+        <div class="report-actions">
+            <button class="export-btn">
+                <i class="fas fa-file-export"></i> Export Full Report
+            </button>
+        </div>
+    </div>
+
+    <!-- Chart.js for the reports -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Time period selector functionality
+        const timePeriodBtns = document.querySelectorAll('.time-period-btn');
+        timePeriodBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                timePeriodBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                // Here you would update the data based on the selected period
+            });
+        });
+
+        // Revenue by Vehicle Type Chart
+        const revenueByTypeCtx = document.getElementById('revenueByTypeChart').getContext('2d');
+        const revenueByTypeChart = new Chart(revenueByTypeCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Sedan', 'SUV', 'Luxury', 'Truck', 'Van'],
+                datasets: [{
+                    data: [12500, 7500, 3000, 1500, 80],
+                    backgroundColor: [
+                        var(--primary-green),
+                        '#17a2b8',
+                        '#6c757d',
+                        '#ffc107',
+                        '#6610f2'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    }
+                }
+            }
+        });
+
+        // Monthly Bookings Chart
+        const monthlyBookingsCtx = document.getElementById('monthlyBookingsChart').getContext('2d');
+        const monthlyBookingsChart = new Chart(monthlyBookingsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [
+                    {
+                        label: 'Completed',
+                        data: [42, 38, 45, 48, 52, 56],
+                        backgroundColor: var(--primary-green),
+                        borderColor: var(--dark-green),
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Cancelled',
+                        data: [5, 8, 6, 4, 7, 3],
+                        backgroundColor: '#17a2b8',
+                        borderColor: '#138496',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Simple logout functionality
+        document.querySelector('.logout-btn').addEventListener('click', function() {
+            if(confirm('Are you sure you want to logout?')) {
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html>

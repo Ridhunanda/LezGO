@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Rental</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">LezGO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#our-service">Our Service</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#why-us">Why Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#faq-section">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/review.html">Review</a></li>
+                    <li class="nav-item"><a class="nav-link" href="C:/Users/RIDHUNANDA/Documents/vehicle%20project/nodejsproject/public/aboutUs.html">About Us</a></li>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <a href="log.html" class="btn btn-success">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Section -->
+    <section class="main-section">
+        <div class="container pt-md-5 pt-sm-3">
+            <div class="row align-items-center">
+                <div class="col-md-6 py-5">
+                    <h1 class="fw-bold animate_animated animate_fadeInUp">Enjoy the Best Vehicle Rental Experience in India</h1>
+                    <p class="mt-4 animate_animated animatefadeInUp animate_delay-1s">
+                        Welcome to Lezgo. We provide the best quality Vehicle at affordable prices. Always ready to serve your needs for vehicle rental for 24 hours.
+                    </p>
+                    <a href="selection.html" class="btn btn-success mt-5 animate_animated animatefadeInUp animate_delay-2s">Start Renting a Vehicle</a>
+                </div>
+                <div class="col-md-6 py-5 d-flex align-items-center justify-content-start" id="car-img">
+                    <img src="https://media.istockphoto.com/id/1365407803/photo/rear-of-car-driving-on-highway-in-the-forest-with-mountain-on-gloomy.jpg?s=612x612&w=0&k=20&c=Ht-tHHkir9yNVSOtKgERcWlcZ7RyYHYhKJEkWWEkVkA=" class="w-100 animate_animated animate_fadeInRight" alt="car" id="img-car">
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="header-container"></div>
+    <script>fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-container').innerHTML = data;
+            updateHeaderProfile(); // Call this if needed
+        });</script>
+
+    
+    <!-- Our Service Section -->
+    <section class="our-section" id="our-service">
+        <div class="container p-md-5">
+            <div class="row d-flex align-items-center justify-content-center">
+                <div class="col-md-5 py-5">
+                    <img src="https://t3.ftcdn.net/jpg/06/36/51/06/360_F_636510606_45v3dx44YChOGktXsOgTnBXbnDnw8Fbb.jpg" alt="img-service" id="img-woman" class="w-100 animate_animated animate_fadeInLeft">
+                </div>
+                <div class="col-md-7 py-5">
+                    <div class="content-our-section animate_animated animate_fadeInRight">
+                        <h1 class="fw-bold">The top choice for vehicle rentals for any trip in India!</h1>
+                        <p class="mt-3">With LezGO Rental in India, you're guaranteed lower prices, new vehicle conditions, and top-quality service for tourist trips, business, weddings, meetings, and more!</p>
+                        <ul class="list-our" style="padding: 0">
+                            <li class="item-list animate_animated animatefadeInRight animate_delay-1s">Rent a vehicle with a driver in India</li>
+                            <li class="item-list animate_animated animatefadeInRight animate_delay-2s">24/7 vehicle rental services across India</li>
+                            <li class="item-list animate_animated animatefadeInRight animate_delay-3s">Long-term monthly vehicle rental options</li>
+                            <li class="item-list animate_animated animatefadeInRight animate_delay-1s">Complimentary vehicle pickup and delivery at the airport</li>
+                            <li class="item-list animate_animated animatefadeInRight animate_delay-2s">Convenient airport transfer and drop-off service</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section class="why-us-section" id="why-us">
+        <div class="container p-md-5">
+            <div class="why-us-tagline">
+                <h1 class="fw-bold animate_animated animate_fadeInDown">Why Us ?</h1>
+                <p class="mt-3 animate_animated animatefadeInDown animate_delay-1s">Why should you choose LezGO vehicle Rental?</p>
+            </div>
+            <div class="why-us-card">
+                <div class="row py-4 d-flex align-items-center">
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card-item animate_animated animate_fadeInUp">
+                            <img style="width: 100px; height: 100px;" class="icon-card" src="https://i.ibb.co/TM3kT2t/icon-complete.png" alt="">
+                            <h2 class="card-title">Complete Vehicle</h2>
+                            <p class="card-desc">There are various vehicle options available, all in like-new condition, clean, and well-maintained.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card-item animate_animated animatefadeInUp animate_delay-1s">
+                            <img style="width: 100px; height: 100px;" class="icon-card" src="https://i.ibb.co/GHMcTvp/icon-price.png" alt="">
+                            <h2 class="card-title">Cheap price</h2>
+                            <p class="card-desc">Affordable and competitive rates—feel free to compare our prices with other Vehicle rentals!</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card-item animate_animated animatefadeInUp animate_delay-2s">
+                            <img style="width: 100px; height: 100px;" class="icon-card" src="https://i.ibb.co/3dLJ0s3/icon-24hrs.png" alt="">
+                            <h2 class="card-title">24 Hour Service</h2>
+                            <p class="card-desc">Available 24/7 to meet your needs, including weekends!</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card-item animate_animated animatefadeInUp animate_delay-3s">
+                            <img style="width: 100px; height: 100px;" class="icon-card" src="https://i.ibb.co/Tb6PTFc/icon-professional.png" alt="">
+                            <h2 class="card-title">Professional Driver</h2>
+                            <p class="card-desc">Our drivers are professional, experienced, honest, friendly, and always punctual.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="testimonial-section" id="testimonials">
+        <div class="container">
+            <h2 class="fw-bold animate_animated animate_fadeInDown">What Our Customers Say</h2>
+            <div class="feedback-grid">
+                <div class="feedback-card animate_animated animate_fadeInUp">
+                    <div class="feedback-header">
+                        <img src="C:\Users\RIDHUNANDA\Documents\vehicle project\nodejsproject\public\sooraj.jpg" alt="Customer" class="feedback-image">
+                        <div class="feedback-user">
+                            <h4 class="feedback-name">Sooraj M</h4>
+                            <p class="feedback-role">Business Travele</p>
+                        </div>
+                    </div>
+                    <div class="feedback-rating">★★★★★</div>
+                    <p class="feedback-content">"LezGO made my business trip so convenient. The car was clean, well-maintained, and the pickup process was seamless. Will definitely use again!"</p>
+                </div>
+                <div class="feedback-card animate_animated animatefadeInUp animate_delay-1s">
+                    <div class="feedback-header">
+                        <img src="C:\Users\RIDHUNANDA\Documents\vehicle project\nodejsproject\public\sourav.jpg" alt="Customer" class="feedback-image">
+                        <div class="feedback-user">
+                            <h4 class="feedback-name">Sourav B Ajith</h4>
+                            <p class="feedback-role">Family Vacation</p>
+                        </div>
+                    </div>
+                    <div class="feedback-rating">★★★★★</div>
+                    <p class="feedback-content">"Excellent customer service! They were very helpful in answering all my questions and finding the perfect car for my budget. Highly recommended!"</p>
+                </div>
+                <div class="feedback-card animate_animated animatefadeInUp animate_delay-2s">
+                    <div class="feedback-header">
+                        <img src="C:\Users\RIDHUNANDA\Documents\vehicle project\nodejsproject\public\kichu.jpg" alt="Customer" class="feedback-image">
+                        <div class="feedback-user">
+                            <h4 class="feedback-name">Ridhukrishna</h4>
+                            <p class="feedback-role">Business Travele</p>
+                        </div>
+                    </div>
+                    <div class="feedback-rating">★★★★☆</div>
+                    <p class="feedback-content">""As a frequent renter, I can confidently say LezGO offers the best vehicles and service in the market. Their app makes booking super easy too!""</p>
+                </div>
+            </div>
+        </div> 
+    </section>
+
+    <!-- Banner Section -->
+    <section class="py-md-4" id="banner-section">
+        <div class="container" id="banner-container">
+            <h1 class="text-center fw-bold mt-5 animate_animated animate_fadeInDown">Rent a Vehicle in India Now</h1>
+            <div class="content-banner text-center mt-4">
+                <p class="animate_animated animatefadeInDown animate_delay-1s">Experience the freedom of the open road with our premium rental vehicles. Whether for business or pleasure, we have the perfect car for your needs.</p>
+                <a href="selection.html" class="btn btn-light mt-5 animate_animated animatefadeInUp animate_delay-2s" style="color: var(--primary-color); border: 2px solid white;">Start Renting a Vehicle</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <h1 class="fw-bold animate_animated animate_fadeInLeft">Frequently Asked Questions</h1>
+                    <p class="animate_animated animatefadeInLeft animate_delay-1s">Find answers to common questions about our rental process, pricing, policies, and more.</p>
+                </div>
+                <div class="col-md-7">
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="card mb-2 animate_animated animate_fadeInRight">
+                            <div class="accordion-header accordion-button collapsed rounded" id="flush-headingOne" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne">
+                                <p>What are the requirements for renting a vehicle</p>
+                            </div>
+                            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <li>Must be at least 20 years old.</li>
+                                    <li>A valid Indian driving license is required</li>
+                                    <li>30% of Rental amount and Security amount (5000 to 20,000) should be paid in advance </li>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-2 animate_animated animatefadeInRight animate_delay-1s">
+                            <div class="accordion-header accordion-button collapsed rounded" id="flush-headingTwo" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo">
+                                <p>What is the minimum duration to rent a vehicle without a driver?</p>
+                            </div>
+                            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body"><li>Minimum 1day</li></div>
+                            </div>
+                        </div>
+                        <div class="card mb-2 animate_animated animatefadeInRight animate_delay-2s">
+                            <div class="accordion-header accordion-button collapsed rounded" id="flush-headingThree" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree">
+                                <p>How many days in advance is it best to book a vehicle rental?</p>
+                            </div>
+                            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body"><li>2 weeks</li></div>
+                            </div>
+                        </div>
+                        <div class="card mb-2 animate_animated animatefadeInRight animate_delay-3s">
+                            <div class="accordion-header accordion-button collapsed rounded" id="flush-headingFive" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive">
+                                <p>What if an accident occurs</p>
+                            </div>
+                            <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-heading" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body"><li>Basic (Included): Covers third-party liability (₹5 lakh limit).</li>
+                                    <li>Premium (Optional): Reduces damage liability (excludes negligence).</li></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer id="footer">
+        <section class="footer-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 animate_animated animate_fadeInUp">
+                        <div class="address me-5">
+                            <p>LezGO Kazhakkootam Trivandrum Kerala 695582 India</p>
+                            <p>info@lezgo.com</p>
+                            <p>+91 8330049835</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 animate_animated animatefadeInUp animate_delay-1s">
+                        <div class="navigation">
+                            <p class="item-navigation">Our Service</p>
+                            <p class="item-navigation">Why Us</p>
+                            <p class="item-navigation">Testimonial</p>
+                            <p class="item-navigation">FAQ</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3 col-sm-6 animate_animated animatefadeInUp animate_delay-2s">
+                        <div class="sosmed">
+                            <p>Connect with us</p>
+                            <div class="d-flex">
+                                <a href="#" style="margin-right: 10px;"><i class="bi bi-instagram"></i></a>
+                                <a href="#"><i class="bi bi-facebook"></i></a>
+                                <a href="#" class="ms-2"><i class="bi bi-twitter"></i></a>
+                                <a href="#" class="ms-2"><i class="bi bi-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 animate_animated animatefadeInUp animate_delay-3s">
+                        <div class="footer-content">
+                            <div class="footer-links">
+                                <a href="privacy.html">Privacy Policy</a>
+                                <a href="terms.html">Terms of Service</a>
+                                <a href="contact.html">Contact Us</a>
+                            </div>
+                            <div class="copyright">
+                                &copy; LezGO 2025. All rights reserved.
+                            </div>
+                            <a href="adminlog.html" class="btn btn-success">admin</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="homepage.js"></script>
+</body>
+</html>
